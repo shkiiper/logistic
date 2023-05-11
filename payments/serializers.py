@@ -10,4 +10,4 @@ class PaymentSerializer(serializers.ModelSerializer):
     amount = serializers.SerializerMethodField()
 
     def get_amount(self, obj):
-        return obj.order.products.all()[0].price * obj.order.products.all()[0].quantity
+        return obj.order.products.all()[0].price * obj.order.all()[0].quantity
