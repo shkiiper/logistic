@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Order(models.Model):
@@ -6,7 +7,6 @@ class Order(models.Model):
                               unique=True)
     date = models.DateTimeField(
         auto_now=True)
-    address = models.CharField(max_length=200)
     products = models.ManyToManyField('Product')
     TYPE_STATUS_CHOICES = (
         ('avia', 'Avia'),
@@ -15,6 +15,14 @@ class Order(models.Model):
     )
     status = models.CharField(max_length=10, choices=TYPE_STATUS_CHOICES,
                               default='track')
+    ADDRESS = (
+        ("kz", "KZ"),
+        ("ru", "RU"),
+        ("uz", "UZ"),
+    )
+    address_type = models.CharField(
+        max_length=20, choices=ADDRESS, verbose_name=_("Address Type")
+    )
 
     def __str__(self):
         return self.number
