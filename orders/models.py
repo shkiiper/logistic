@@ -2,11 +2,19 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)  # описание продукта (текстовое поле, необязательное)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.name
+
 class Order(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, related_name='order')
     phone_number = models.CharField(max_length=20, default=None)
     date = models.DateTimeField(
         auto_now=True)
-    products = models.ManyToManyField('Product')
     TYPE_STATUS_CHOICES = (
         ('avia', 'Avia'),
         ('train', 'Train'),
@@ -37,10 +45,3 @@ class Order(models.Model):
         return self.number
 
 
-class Product(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)  # описание продукта (текстовое поле, необязательное)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
-    def __str__(self):
-        return self.name
