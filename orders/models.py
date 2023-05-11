@@ -24,14 +24,21 @@ class Order(models.Model):
     )
 
     quantity = models.DecimalField(max_digits=10, decimal_places=2,
-                                   default=0)  # количество продукта (десятичное число с 10 знаками перед запятой и 2 знаками после, по умолчанию
+                                   default=0)
+    date_end = models.DateField(null=True)
+    STATUS_CHOICES = (
+        ('past', 'Past'),
+        ('now', 'Now'),
+    )
+    date_status = models.CharField(max_length=10, choices=STATUS_CHOICES,
+                                   default='now')
 
     def __str__(self):
         return self.number
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)  # название продукта (строка длиной до 100 символов)
+    name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)  # описание продукта (текстовое поле, необязательное)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 

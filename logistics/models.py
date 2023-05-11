@@ -14,4 +14,4 @@ class Delivery(models.Model):
                               default='now')
 
     def __str__(self):
-        return self.date_end
+        return f"{self.order}, {self.date_end}, {self.status}"
