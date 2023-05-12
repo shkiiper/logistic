@@ -10,11 +10,11 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class Order(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE, null=True, related_name='order')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, related_name='orders')
     phone_number = models.CharField(max_length=20, default=None)
-    date = models.DateTimeField(
-        auto_now=True)
+    date = models.DateField(auto_now_add=True)
     TYPE_STATUS_CHOICES = (
         ('avia', 'Avia'),
         ('train', 'Train'),
@@ -43,5 +43,3 @@ class Order(models.Model):
 
     def __str__(self):
         return self.number
-
-
